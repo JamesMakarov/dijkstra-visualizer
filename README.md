@@ -68,9 +68,9 @@ This keeps the algorithm independent from JavaFX-specific drawing code.
 ## Requirements
 
 - JDK 21 or newer;
-- JavaFX 21.
+- Maven.
 
-The JavaFX JARs currently used by the project are available in `lib/`.
+JavaFX is resolved automatically by Maven.
 
 ## Running
 
@@ -81,11 +81,19 @@ git clone https://github.com/JamesMakarov/dijkstra-visualizer.git
 cd dijkstra-visualizer
 ```
 
-Configure the JAR files from `lib/` as project dependencies in your IDE and execute:
+Compile:
 
-```text
-app.Launcher
+```bash
+mvn compile
 ```
+
+Run the application:
+
+```bash
+mvn javafx:run
+```
+
+The main class is `app.Launcher`.
 
 ## Controls
 
