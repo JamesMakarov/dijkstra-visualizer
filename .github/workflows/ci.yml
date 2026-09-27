@@ -13,7 +13,6 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
+          cache: maven
       - name: Compile
-        run: |
-          mkdir -p build
-          find src -name "*.java" -print0 | xargs -0 javac -cp "lib/*" -d build
+        run: mvn --batch-mode compile
