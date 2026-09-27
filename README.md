@@ -1,5 +1,7 @@
 # Dijkstra Visualizer
 
+[![Java tests](https://github.com/JamesMakarov/dijkstra-visualizer/actions/workflows/ci.yml/badge.svg)](https://github.com/JamesMakarov/dijkstra-visualizer/actions/workflows/ci.yml)
+
 Interactive desktop application built with **Java and JavaFX** to visualize Dijkstra's shortest-path algorithm on a directed weighted graph.
 
 The project separates the graph model and algorithm from the JavaFX interface, allowing the algorithm to emit events while the UI displays each step of the execution.
@@ -94,6 +96,22 @@ mvn javafx:run
 ```
 
 The main class is `app.Launcher`.
+
+## Tests
+
+The project includes JUnit tests for the core shortest-path behavior:
+
+- selection of the actual minimum-cost path;
+- unreachable destinations;
+- source equal to destination.
+
+Run them with:
+
+```bash
+mvn test
+```
+
+The same suite runs automatically on GitHub Actions.
 
 ## Controls
 
