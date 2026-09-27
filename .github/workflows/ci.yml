@@ -1,4 +1,4 @@
-name: Java build
+name: Java tests
 
 on:
   push:
