@@ -1,71 +1,107 @@
-<div align="center">
+# Dijkstra Visualizer
 
-  # 🕸️ Dijkstra Visualizer
-  
-  **Visualizador interativo do algoritmo de Dijkstra em JavaFX.**
-  
-  ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-  ![JavaFX](https://img.shields.io/badge/JavaFX-2D2D30?style=for-the-badge&logo=java&logoColor=white)
-  ![Status](https://img.shields.io/badge/Status-Finished-39ff14?style=for-the-badge)
+Interactive desktop application built with **Java and JavaFX** to visualize Dijkstra's shortest-path algorithm on a directed weighted graph.
 
-  ---
-  
-  *Visualização em tempo real do algoritmo de caminho mínimo com arquitetura desacoplada.*
+The project separates the graph model and algorithm from the JavaFX interface, allowing the algorithm to emit events while the UI displays each step of the execution.
 
-</div>
+## Features
 
-## 📖 Sobre o Projeto
+- create and remove vertices;
+- create directed weighted edges;
+- drag vertices across the canvas;
+- select source and destination vertices;
+- reject negative edge weights;
+- animate visits, relaxations and rejected edges;
+- highlight the final shortest path;
+- calculate the total path cost;
+- detect unreachable destinations;
+- generate random graphs;
+- reset algorithm colors without deleting the graph;
+- clear the entire graph.
 
-Este projeto não é apenas uma visualização de algoritmo, é um estudo de caso em **Engenharia de Software** aplicada. O objetivo foi criar uma aplicação desktop robusta, responsiva e visualmente moderna para demonstrar o funcionamento do **Algoritmo de Dijkstra**.
+## Structure
 
-O visualizador separa a lógica do algoritmo da interface e executa o processamento em uma thread separada para manter a interface responsiva durante a animação.
+```text
+src/
+├── algorithm/
+│   ├── DijkstraListener.java
+│   └── DijkstraSolver.java
+├── app/
+│   ├── EdgeFX.java
+│   ├── GraphMain.java
+│   ├── Launcher.java
+│   ├── Main.java
+│   └── NodeFX.java
+└── model/
+    ├── Edge.java
+    └── Vertex.java
+```
 
-## ✨ Funcionalidades Principais
+## Algorithm
 
-### 🎨 Interface & UX
-* **Modo Dark Neon:** Design moderno inspirado em ferramentas de engenharia e cyberpunk.
-* **Drag & Drop Fluido:** Manipulação livre de vértices e arestas.
-* **Feedback Visual:** Cores distintas para nós visitados (Amarelo), finalizados (Verde) e caminhos descartados (Vermelho).
+`DijkstraSolver` uses:
 
-### ⚙️ Engenharia & Performance
-* **Gerador de Grafos Aleatórios:** Crie cenários de teste complexos (10 a 100 nós) com um único clique.
-* **Thread Safety:** O algoritmo roda em *Worker Threads*, prevenindo o congelamento da interface.
-* **Validação em Tempo Real:** * Bloqueio de arestas com pesos negativos.
-    * Detecção automática de grafos desconexos.
-    * Tratamento de caminhos impossíveis.
+- a `PriorityQueue` to select the next closest vertex;
+- a distance map;
+- a predecessor map;
+- path reconstruction after the destination is reached.
 
-## 🛠️ Arquitetura e Design Patterns
+If the destination is never reached, the solver returns an empty path.
 
-O código foi estruturado para ser escalável e testável:
+## UI synchronization
 
-| Padrão / Conceito | Aplicação no Projeto |
-| :--- | :--- |
-| **Observer Pattern** | Desacopla o Algoritmo (`DijkstraSolver`) da Interface (`GraphMain`). O backend apenas "notifica" eventos, sem saber quem os desenha. |
-| **Multithreading** | Uso de `Platform.runLater()` para sincronizar o processamento pesado com a *JavaFX Application Thread*. |
-| **Composite Pattern** | Componentes visuais como `NodeFX` e `EdgeFX` encapsulam sua própria lógica de renderização e eventos. |
+The visual execution runs outside the JavaFX Application Thread.
 
-## 🎮 Como Usar (Guia de Controles)
+The application starts Dijkstra on a worker thread and uses `Platform.runLater()` for visual updates. This keeps the UI responsive while the algorithm animation is running.
 
-A barra de ferramentas foi projetada para ser intuitiva:
+## Event-based visualization
 
-| Botão / Cor | Função |
-| :--- | :--- |
-| **✋ Mover** | Arraste os nós para organizar o grafo. |
-| **➕ Nó / 🔗 Aresta** | Ferramentas de edição para desenhar manualmente. |
-| **🚩 Início / 🏁 Fim** | Define os pontos de partida e chegada. |
-| **🟪 Gerar (Roxo)** | Cria um grafo aleatório proceduralmente. |
-| **🟩 Rodar (Verde)** | Inicia a animação do algoritmo. |
-| **🟧 Resetar (Laranja)** | Limpa apenas a "tinta" da animação, mantendo o grafo. |
-| **🟥 Limpar (Vermelho)** | Apaga tudo da tela (Reset total). |
+`DijkstraListener` exposes events for:
 
-## 🚀 Como Rodar Localmente
+- vertex visit;
+- vertex finalization;
+- edge relaxation;
+- rejected relaxation attempt.
 
-### Pré-requisitos
-* **Java JDK 21** ou superior.
-* Maven (opcional) ou qualquer IDE compatível (IntelliJ IDEA recomendado).
+This keeps the algorithm independent from JavaFX-specific drawing code.
 
-### Passo a Passo
+## Requirements
 
-1. **Clone o repositório**
-   ```bash
-   git clone https://github.com/JamesMakarov/dijkstra-visualizer.git
+- JDK 21 or newer;
+- JavaFX 21.
+
+The JavaFX JARs currently used by the project are available in `lib/`.
+
+## Running
+
+Clone the repository:
+
+```bash
+git clone https://github.com/JamesMakarov/dijkstra-visualizer.git
+cd dijkstra-visualizer
+```
+
+Configure the JAR files from `lib/` as project dependencies in your IDE and execute:
+
+```text
+app.Launcher
+```
+
+## Controls
+
+| Action | Purpose |
+|---|---|
+| Move | Drag vertices |
+| Add node | Create a vertex |
+| Add edge | Create a directed weighted edge |
+| Remove | Delete a vertex or edge |
+| Start | Select the source vertex |
+| End | Select the destination vertex |
+| Generate graph | Create a random graph |
+| Reset | Clear algorithm visualization state |
+| Run Dijkstra | Execute the algorithm |
+| Clear | Remove the entire graph |
+
+## Notes
+
+Dijkstra's algorithm assumes non-negative edge weights, so the interface blocks negative values when edges are created.
