@@ -15,4 +15,4 @@ jobs:
           java-version: "21"
           cache: maven
       - name: Compile
-        run: mvn --batch-mode compile
+        run: mvn --batch-mode test
