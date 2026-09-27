@@ -2,11 +2,10 @@
 
   # 🕸️ Dijkstra Visualizer
   
-  **Uma ferramenta de alta performance para visualização de Algoritmos de Grafos.**
+  **Visualizador interativo do algoritmo de Dijkstra em JavaFX.**
   
   ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
   ![JavaFX](https://img.shields.io/badge/JavaFX-2D2D30?style=for-the-badge&logo=java&logoColor=white)
-  ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
   ![Status](https://img.shields.io/badge/Status-Finished-39ff14?style=for-the-badge)
 
   ---
@@ -19,7 +18,7 @@
 
 Este projeto não é apenas uma visualização de algoritmo, é um estudo de caso em **Engenharia de Software** aplicada. O objetivo foi criar uma aplicação desktop robusta, responsiva e visualmente moderna para demonstrar o funcionamento do **Algoritmo de Dijkstra**.
 
-Diferente de implementações simples, este visualizador foca em UX (Experiência do Usuário) e Arquitetura Limpa, garantindo que a interface permaneça fluida (60 FPS) mesmo durante o processamento de grafos complexos.
+O visualizador separa a lógica do algoritmo da interface e executa o processamento em uma thread separada para manter a interface responsiva durante a animação.
 
 ## ✨ Funcionalidades Principais
 
@@ -30,7 +29,7 @@ Diferente de implementações simples, este visualizador foca em UX (Experiênci
 
 ### ⚙️ Engenharia & Performance
 * **Gerador de Grafos Aleatórios:** Crie cenários de teste complexos (10 a 100 nós) com um único clique.
-* **Thread Safety:** O algoritmo roda em *Worker Threads*, prevenindo o congelamento da interface (ANR).
+* **Thread Safety:** O algoritmo roda em *Worker Threads*, prevenindo o congelamento da interface.
 * **Validação em Tempo Real:** * Bloqueio de arestas com pesos negativos.
     * Detecção automática de grafos desconexos.
     * Tratamento de caminhos impossíveis.
@@ -69,4 +68,4 @@ A barra de ferramentas foi projetada para ser intuitiva:
 
 1. **Clone o repositório**
    ```bash
-   git clone [https://github.com/seu-usuario/dijkstra-visualizer.git](https://github.com/seu-usuario/dijkstra-visualizer.git)
+   git clone https://github.com/JamesMakarov/dijkstra-visualizer.git
